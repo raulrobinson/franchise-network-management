@@ -8,9 +8,10 @@ import reactor.core.publisher.Mono;
 public interface AppPersistenceAdapterPort {
     Mono<FranchiseEntity> createFranchise(FranchiseEntity franchiseEntity);
     Mono<BranchEntity> addBranch(BranchEntity branchEntity);
-
     Mono<ProductEntity> addProduct(ProductEntity productEntity);
-    Mono<ProductEntity> deleteProduct(Long productId, Long branchId);
+    Mono<Boolean> existsByProductId(Long productId);
+    Mono<Void> deleteProduct(Long productId, Long branchId);
+
     Mono<ProductEntity> updateProduct(ProductEntity productEntity, Long productId);
     Mono<BranchEntity> getTopProductsPerBranch(Long franchiseId);
 

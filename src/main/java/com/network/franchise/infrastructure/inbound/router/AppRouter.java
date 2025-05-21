@@ -200,13 +200,59 @@ public class AppRouter {
                             }
                     )
             ),
+            @RouterOperation(
+                    path = "/api/v1/branches/{branchId}/products/{productId}",
+                    produces = "application/json",
+                    method = RequestMethod.DELETE,
+                    beanClass = AppHandler.class,
+                    beanMethod = "deleteProduct",
+                    operation = @io.swagger.v3.oas.annotations.Operation(
+                            operationId = "deleteProduct",
+                            summary = "Delete a Product from a Branch",
+                            description = "Delete a Product from an existing Branch in the database.",
+                            parameters = {
+                                    @Parameter(name = "branchId", in = ParameterIn.PATH, description = "Branch ID", example = "1"),
+                                    @Parameter(name = "productId", in = ParameterIn.PATH, description = "Product ID", example = "1"),
+                            },
+                            responses = {
+                                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                                            responseCode = "204",
+                                            description = "No Content"
+                                    ),
+                                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                                            responseCode = "400",
+                                            description = "Bad Request",
+                                            content = @io.swagger.v3.oas.annotations.media.Content(
+                                                    mediaType = "application/json",
+                                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ErrorDto.class)
+                                            )
+                                    ),
+                                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                                            responseCode = "404",
+                                            description = "Not Found",
+                                            content = @io.swagger.v3.oas.annotations.media.Content(
+                                                    mediaType = "application/json",
+                                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ErrorDto.class)
+                                            )
+                                    ),
+                                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                                            responseCode = "500",
+                                            description = "Internal Server Error",
+                                            content = @io.swagger.v3.oas.annotations.media.Content(
+                                                    mediaType = "application/json",
+                                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ErrorDto.class)
+                                            )
+                                    )
+                            }
+                    )
+            )
     })
     public RouterFunction<ServerResponse> franchiseRoutes(AppHandler handler) {
         return RouterFunctions.route()
                 .POST("/api/v1/franchises", handler::createFranchise)
                 .POST("/api/v1/franchises/{franchiseId}/branches", handler::addBranch)
                 .POST("/api/v1/branches/{branchId}/products", handler::addProduct)
-//                .DELETE("/branches/{branchId}/products/{productId}", handler::deleteProduct)
+                .DELETE("/api/v1/branches/{branchId}/products/{productId}", handler::deleteProduct)
 //                .PUT("/products/{productId}/stock", handler::updateStock)
 //                .GET("/franchises/{franchiseId}/top-products", handler::getTopProductsPerBranch)
                 .build();

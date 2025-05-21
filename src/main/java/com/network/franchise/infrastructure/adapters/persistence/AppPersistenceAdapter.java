@@ -52,19 +52,32 @@ public class AppPersistenceAdapter implements AppPersistenceAdapterPort {
     }
 
     @Override
-    public Mono<ProductEntity> deleteProduct(Long productId, Long branchId) {
+    public Mono<Boolean> existsByProductId(Long productId) {
+        return productRepository.existsById(productId)
+                .switchIfEmpty(Mono.error(new NoContentException(TechnicalMessage.NO_CONTENT)))
+                .flatMap(exists -> {
+                    if (exists) return Mono.just(true);
+                    return Mono.just(false);
+                })
+                .switchIfEmpty(Mono.error(new ProcessorException("Error checking product existence", TechnicalMessage.BAD_REQUEST)));
+    }
+
+    @Override
+    public Mono<Void> deleteProduct(Long productId, Long branchId) {
         return productRepository.findById(productId)
                 .flatMap(productEntity -> {
                     if (productEntity.getBranchId().equals(branchId)) {
                         return productRepository.delete(productEntity)
-                                .then(Mono.just(productEntity))
-                                .doOnSuccess(deletedProductEntity -> log.info("Product deleted: {}", deletedProductEntity))
+                                .doOnSuccess(aVoid -> log.info("Product deleted: {}", productEntity))
                                 .doOnError(error -> log.error("Error deleting product: {}", error.getMessage()));
+//                                .then(Mono.just(productEntity));
+//                                .doOnSuccess(deletedProductEntity -> log.info("Product deleted: {}", deletedProductEntity))
+//                                .doOnError(error -> log.error("Error deleting product: {}", error.getMessage()));
                     } else {
-                        return Mono.error(new RuntimeException("Product does not belong to this branch"));
+                        return Mono.error(new ProcessorException("Product does not belong to this branch", TechnicalMessage.BAD_REQUEST));
                     }
-                })
-                .switchIfEmpty(Mono.error(new RuntimeException("Product not found")));
+                });
+//                .switchIfEmpty(Mono.error(new RuntimeException("Product not found")));
 
 //        Long branchId = Long.parseLong(request.pathVariable("branchId"));
 //        Long productId = Long.parseLong(request.pathVariable("productId"));
