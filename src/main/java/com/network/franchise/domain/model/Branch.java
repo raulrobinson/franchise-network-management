@@ -1,4 +1,4 @@
-package com.network.franchise.entity;
+package com.network.franchise.domain.model;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -12,11 +12,8 @@ import org.springframework.data.relational.core.mapping.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table("franchises")
-public class Franchise {
-    @Id
+public class Branch {
     private Long id;
-
-    @NotBlank
     private String name;
+    private Long franchiseId;
 }
