@@ -9,6 +9,9 @@ public interface AppPersistenceAdapterPort {
     Mono<FranchiseEntity> createFranchise(FranchiseEntity franchiseEntity);
     Mono<BranchEntity> addBranch(BranchEntity branchEntity);
     Mono<ProductEntity> addProduct(ProductEntity productEntity);
+
+    Mono<ProductEntity> findProductById(Long productId);
+
     Mono<Boolean> existsByProductId(Long productId);
     Mono<Void> deleteProduct(Long productId, Long branchId);
 

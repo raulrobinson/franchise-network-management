@@ -52,6 +52,11 @@ public class AppPersistenceAdapter implements AppPersistenceAdapterPort {
     }
 
     @Override
+    public Mono<ProductEntity> findProductById(Long productId) {
+        return productRepository.findById(productId);
+    }
+
+    @Override
     public Mono<Boolean> existsByProductId(Long productId) {
         return productRepository.existsById(productId)
                 .switchIfEmpty(Mono.error(new NoContentException(TechnicalMessage.NO_CONTENT)))

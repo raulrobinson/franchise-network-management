@@ -4,16 +4,14 @@ import com.network.franchise.domain.common.ErrorDto;
 import com.network.franchise.domain.common.exceptions.BusinessException;
 import com.network.franchise.domain.dto.request.CreateBranchRequestDto;
 import com.network.franchise.domain.dto.request.CreateProductRequestDto;
+import com.network.franchise.domain.dto.request.UpdateProductStockRequestDto;
 import com.network.franchise.domain.mapper.BranchesDomainMapper;
 import com.network.franchise.domain.mapper.FranchiseDomainMapper;
 import com.network.franchise.domain.mapper.ProductsDomainMapper;
 import com.network.franchise.domain.model.Branch;
 import com.network.franchise.domain.model.Product;
-import com.network.franchise.domain.spi.AddBranchServicePort;
-import com.network.franchise.domain.spi.AddProductServicePort;
-import com.network.franchise.domain.spi.CreateFranchiseServicePort;
+import com.network.franchise.domain.spi.*;
 import com.network.franchise.domain.dto.request.CreateFranchiseRequestDto;
-import com.network.franchise.domain.spi.DeleteProductServicePort;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +36,7 @@ public class AppHandler {
     private final AddBranchServicePort addBranchServicePort;
     private final AddProductServicePort addProductServicePort;
     private final DeleteProductServicePort deleteProductServicePort;
+    private final UpdateStockServicePort updateStockServicePort;
 
     private final FranchiseDomainMapper franchiseMapper;
     private final BranchesDomainMapper branchesMapper;
@@ -123,42 +122,31 @@ public class AppHandler {
     }
 
     public Mono<ServerResponse> updateStock(ServerRequest request) {
-        return null;
+        Long productId = Long.parseLong(request.pathVariable("productId"));
+        return request.bodyToMono(UpdateProductStockRequestDto.class)
+                .flatMap(dto -> {
+                    Product product = Product.builder()
+                            .id(productId)
+                            .stock(Math.toIntExact(dto.getStock()))
+                            .build();
+                    return updateStockServicePort.updateStock(productsMapper.toDomainFromUpdateProductRequestDto(product, productId))
+                            .flatMap(res -> ServerResponse.ok().bodyValue(res));
+                })
+                .doOnError(error -> log.error(UPDATE_ERROR, error.getMessage()))
+                .onErrorResume(BusinessException.class, ex -> buildErrorResponse(
+                        HttpStatus.BAD_REQUEST, ex.getTechnicalMessage(),
+                        List.of(ErrorDto.builder()
+                                .code(ex.getTechnicalMessage().getCode())
+                                .message(ex.getTechnicalMessage().getMessage())
+                                .parameter(ex.getTechnicalMessage().getParameter())
+                                .build())
+                ));
     }
 
     public Mono<ServerResponse> getTopProductsPerBranch(ServerRequest request) {
         return null;
     }
 
-//    public Mono<ServerResponse> addProduct(ServerRequest request) {
-//        Long branchId = Long.parseLong(request.pathVariable("branchId"));
-//        return request.bodyToMono(ProductEntity.class)
-//                .map(productEntity -> productEntity.toBuilder().branchId(branchId).build())
-//                .flatMap(productRepository::save)
-//                .flatMap(productEntity -> ServerResponse.ok().bodyValue(productEntity));
-//    }
-//
-//    public Mono<ServerResponse> deleteProduct(ServerRequest request) {
-//        Long branchId = Long.parseLong(request.pathVariable("branchId"));
-//        Long productId = Long.parseLong(request.pathVariable("productId"));
-//        return productRepository.deleteByBranchIdAndId(branchId, productId)
-//                .then(ServerResponse.noContent().build());
-//    }
-//
-//    public Mono<ServerResponse> updateStock(ServerRequest request) {
-//        Long productId = Long.parseLong(request.pathVariable("productId"));
-//        return productRepository.findById(productId)
-//                .zipWith(request.bodyToMono(ProductEntity.class))
-//                .map(tuple -> {
-//                    ProductEntity existing = tuple.getT1();
-//                    int newStock = tuple.getT2().getStock();
-//                    existing.setStock(newStock);
-//                    return existing;
-//                })
-//                .flatMap(productRepository::save)
-//                .flatMap(productEntity -> ServerResponse.ok().bodyValue(productEntity));
-//    }
-//
 //    public Mono<ServerResponse> getTopProductsPerBranch(ServerRequest request) {
 //        Long franchiseId = Long.parseLong(request.pathVariable("franchiseId"));
 //        return branchRepository.findByFranchiseId(franchiseId)

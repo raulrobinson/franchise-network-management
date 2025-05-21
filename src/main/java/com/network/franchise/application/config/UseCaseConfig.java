@@ -4,10 +4,7 @@ import com.network.franchise.domain.api.AppPersistenceAdapterPort;
 import com.network.franchise.domain.mapper.BranchesDomainMapper;
 import com.network.franchise.domain.mapper.FranchiseDomainMapper;
 import com.network.franchise.domain.mapper.ProductsDomainMapper;
-import com.network.franchise.domain.usecase.command.AddBranchUseCase;
-import com.network.franchise.domain.usecase.command.AddProductUseCase;
-import com.network.franchise.domain.usecase.command.CreateFranchiseUseCase;
-import com.network.franchise.domain.usecase.command.DeleteProductUseCase;
+import com.network.franchise.domain.usecase.command.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.r2dbc.config.EnableR2dbcAuditing;
@@ -37,5 +34,11 @@ public class UseCaseConfig {
     @Bean
     public DeleteProductUseCase deleteProductUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort) {
         return new DeleteProductUseCase(appPersistenceAdapterPort);
+    }
+
+    @Bean
+    public UpdateStockUseCase updateStockUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort,
+                                                 ProductsDomainMapper mapper) {
+        return new UpdateStockUseCase(appPersistenceAdapterPort, mapper);
     }
 }
