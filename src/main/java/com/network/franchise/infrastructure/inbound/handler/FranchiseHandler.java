@@ -4,7 +4,7 @@ import com.network.franchise.domain.common.ErrorDto;
 import com.network.franchise.domain.common.exceptions.BusinessException;
 import com.network.franchise.domain.mapper.FranchiseDomainMapper;
 import com.network.franchise.domain.spi.CreateFranchiseServicePort;
-import com.network.franchise.dto.request.CreateFranchiseRequestDto;
+import com.network.franchise.domain.dto.request.CreateFranchiseRequestDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import static com.network.franchise.domain.common.util.Constants.CREATE_ERROR;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@Tag(name = "Franchise", description = "Franchise Management Services API")
+@Tag(name = "Franchises", description = "Franchises Management Services API")
 public class FranchiseHandler {
 
     private final CreateFranchiseServicePort createFranchiseServicePort;
@@ -41,6 +41,26 @@ public class FranchiseHandler {
                                 .parameter(ex.getTechnicalMessage().getParameter())
                                 .build())
                 ));
+    }
+
+    public Mono<ServerResponse> addBranch(ServerRequest request) {
+        return null;
+    }
+
+    public Mono<ServerResponse> addProduct(ServerRequest request) {
+        return null;
+    }
+
+    public Mono<ServerResponse> deleteProduct(ServerRequest request) {
+        return null;
+    }
+
+    public Mono<ServerResponse> updateStock(ServerRequest request) {
+        return null;
+    }
+
+    public Mono<ServerResponse> getTopProductsPerBranch(ServerRequest request) {
+        return null;
     }
 
 //    public Mono<ServerResponse> addBranch(ServerRequest request) {
