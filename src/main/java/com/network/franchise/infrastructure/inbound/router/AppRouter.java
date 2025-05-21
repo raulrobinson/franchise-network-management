@@ -138,7 +138,7 @@ public class AppRouter {
         return RouterFunctions.route()
                 .POST("/api/v1/franchises", handler::createFranchise)
                 .POST("/api/v1/franchises/{franchiseId}/branches", handler::addBranch)
-//                .POST("/branches/{branchId}/products", handler::addProduct)
+                .POST("/branches/{branchId}/products", handler::addProduct)
 //                .DELETE("/branches/{branchId}/products/{productId}", handler::deleteProduct)
 //                .PUT("/products/{productId}/stock", handler::updateStock)
 //                .GET("/franchises/{franchiseId}/top-products", handler::getTopProductsPerBranch)

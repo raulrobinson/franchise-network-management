@@ -96,7 +96,7 @@ public class AppHandler {
 //                .flatMap(branchRepository::save)
 //                .flatMap(branchEntity -> ServerResponse.ok().bodyValue(branchEntity));
 //    }
-//
+
 //    public Mono<ServerResponse> addProduct(ServerRequest request) {
 //        Long branchId = Long.parseLong(request.pathVariable("branchId"));
 //        return request.bodyToMono(ProductEntity.class)
