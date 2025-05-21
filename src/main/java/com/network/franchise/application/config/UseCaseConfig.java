@@ -7,8 +7,10 @@ import com.network.franchise.domain.usecase.command.AddBranchUseCase;
 import com.network.franchise.domain.usecase.command.CreateFranchiseUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.r2dbc.config.EnableR2dbcAuditing;
 
 @Configuration
+@EnableR2dbcAuditing
 public class UseCaseConfig {
 
     @Bean
