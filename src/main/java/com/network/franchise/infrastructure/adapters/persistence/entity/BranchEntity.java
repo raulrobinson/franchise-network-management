@@ -1,4 +1,4 @@
-package com.network.franchise.entity;
+package com.network.franchise.infrastructure.adapters.persistence.entity;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @Table("branches")
-public class Branch {
+public class BranchEntity {
     @Id
     private Long id;
 

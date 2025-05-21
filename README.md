@@ -1,4 +1,4 @@
-# franchise-network-management
+# franchiseEntity-network-management
 
 API for Franchise Network Management Services
 
