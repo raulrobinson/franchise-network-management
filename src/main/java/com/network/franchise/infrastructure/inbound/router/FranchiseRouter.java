@@ -3,6 +3,7 @@ package com.network.franchise.infrastructure.inbound.router;
 import com.network.franchise.domain.common.ErrorDto;
 import com.network.franchise.domain.model.Franchise;
 import com.network.franchise.dto.request.CreateFranchiseRequestDto;
+import com.network.franchise.dto.response.CreateFranchiseResponseDto;
 import com.network.franchise.infrastructure.inbound.handler.FranchiseHandler;
 import org.springdoc.core.annotations.RouterOperation;
 import org.springdoc.core.annotations.RouterOperations;
@@ -41,7 +42,7 @@ public class FranchiseRouter {
                                             description = "Created",
                                             content = @io.swagger.v3.oas.annotations.media.Content(
                                                     mediaType = "application/json",
-                                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Franchise.class)
+                                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateFranchiseResponseDto.class)
                                             )
                                     ),
                                     @io.swagger.v3.oas.annotations.responses.ApiResponse(

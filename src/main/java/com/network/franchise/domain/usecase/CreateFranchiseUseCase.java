@@ -7,6 +7,7 @@ import com.network.franchise.domain.common.exceptions.DuplicateException;
 import com.network.franchise.domain.mapper.FranchiseDomainMapper;
 import com.network.franchise.domain.model.Franchise;
 import com.network.franchise.domain.spi.CreateFranchiseServicePort;
+import com.network.franchise.dto.response.CreateFranchiseResponseDto;
 import reactor.core.publisher.Mono;
 
 public class CreateFranchiseUseCase implements CreateFranchiseServicePort {
@@ -20,7 +21,10 @@ public class CreateFranchiseUseCase implements CreateFranchiseServicePort {
     }
 
     @Override
-    public Mono<Franchise> createTechnology(Franchise request) {
+    public Mono<CreateFranchiseResponseDto> createTechnology(Franchise request) {
+        if (request.getName() == null || request.getName().isBlank()) {
+            return Mono.error(new BusinessException(TechnicalMessage.MISSING_REQUIRED_FIELD));
+        }
         return franchisePersistenceAdapterPort.existsByName(request.getName())
                 .flatMap(exists -> {
                     if (exists) return Mono.error(new DuplicateException(TechnicalMessage.ALREADY_EXISTS));

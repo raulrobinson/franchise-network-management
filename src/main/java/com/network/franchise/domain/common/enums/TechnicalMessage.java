@@ -14,7 +14,8 @@ public enum TechnicalMessage {
     NOT_FOUND("404", "Not found", ""),
     NO_CONTENT("204", "No content", ""),
     INVALID_REQUEST("400", "Request null or incomplete", ""),
-    ALREADY_EXISTS("409", "Already exists", "");
+    ALREADY_EXISTS("409", "Already exists", ""),
+    MISSING_REQUIRED_FIELD("400", "Missing required field", "");
 
     private final String code;
     private final String message;

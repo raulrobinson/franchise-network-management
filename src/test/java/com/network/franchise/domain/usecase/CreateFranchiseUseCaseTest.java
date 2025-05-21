@@ -6,6 +6,7 @@ import com.network.franchise.domain.common.exceptions.BusinessException;
 import com.network.franchise.domain.common.exceptions.DuplicateException;
 import com.network.franchise.domain.mapper.FranchiseDomainMapper;
 import com.network.franchise.domain.model.Franchise;
+import com.network.franchise.dto.response.CreateFranchiseResponseDto;
 import com.network.franchise.infrastructure.adapters.persistence.entity.FranchiseEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ class CreateFranchiseUseCaseTest {
         // Arrange
         Franchise request = Franchise.builder().name("Franchise A").build();
         FranchiseEntity entity = FranchiseEntity.builder().name("Franchise A").build();
-        Franchise result = Franchise.builder().name("Franchise A").build();
+        CreateFranchiseResponseDto result = CreateFranchiseResponseDto.builder().name("Franchise A").build();
 
         when(franchisePersistenceAdapterPort.existsByName("Franchise A"))
         .thenReturn(Mono.just(false));

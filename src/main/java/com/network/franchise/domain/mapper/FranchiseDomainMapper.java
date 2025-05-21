@@ -2,6 +2,7 @@ package com.network.franchise.domain.mapper;
 
 import com.network.franchise.domain.model.Franchise;
 import com.network.franchise.dto.request.CreateFranchiseRequestDto;
+import com.network.franchise.dto.response.CreateFranchiseResponseDto;
 import com.network.franchise.infrastructure.adapters.persistence.entity.FranchiseEntity;
 import org.springframework.stereotype.Component;
 
@@ -22,9 +23,9 @@ public class FranchiseDomainMapper {
                 .build();
     }
 
-    public Franchise toDomainFromFranchiseEntity(FranchiseEntity entity) {
+    public CreateFranchiseResponseDto toDomainFromFranchiseEntity(FranchiseEntity entity) {
         if (entity == null) return null;
-        return Franchise.builder()
+        return CreateFranchiseResponseDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .build();
