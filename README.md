@@ -30,6 +30,18 @@ The Franchise Network Management project is a Spring Boot application that provi
 5. The application will start on port 8080 by default
 6. You can access the API documentation at `http://localhost:8080/webjars/swagger-ui/index.html`
 
+### Docker Compose
+
+The project includes a `docker-compose.yml` file that can be used to run the application in a Docker container. To run the application using Docker Compose, follow these steps:
+
+1. Make sure you have Docker and Docker Compose installed on your machine.
+2. Navigate to the project directory.
+3. Run the following command to start the application:
+   ```
+   docker-compose up
+   ```
+4. The application will start on port 8080 by default.
+
 
 ### API Documentation
 
@@ -81,6 +93,20 @@ The deployment of the application in AWS is done using Terraform. The Terraform 
 - EC2 Instances
 - RDS Instances
 - Load Balancers
+
+### Pattern Hexagonal Architecture
+
+The project follows the Hexagonal Architecture pattern, which separates the application into different layers. The main layers are:
+
+- **Domain Layer**: Contains the business logic and domain entities.
+- **Application Layer**: Contains the application services and use cases.
+- **Infrastructure Layer**: Contains the implementation details, such as repositories and external services.
+
+![hexagon-adapters-ports.drawio.png](hexagon-adapters-ports.drawio.png)
+
+### Flow Chart Use Cases
+
+![franchise-network-flowchart.png](franchise-network-flowchart.png)
 
 ### Author
 
