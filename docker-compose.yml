@@ -13,29 +13,30 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-#  # ----------------------------------------
-#  # UTILITIES - 8088
-#  # ----------------------------------------
-#  utilities:
-#    build: ./utilities-portal-dyt
-#    restart: always
-#    ports:
-#      - $UTILITIES_LOCAL_PORT:$MICROSERVICES_DOCKER_PORT
-#    environment:
+  # [Franchise Network Management] Service
+  app:
+    build:
+        context: ./
+        dockerfile: Dockerfile
+    restart: always
+    container_name: franchise-network-mgmt
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+      SPRING_R2DBC_URL: r2dbc:postgresql://postgres-franchises-db:5432/postgres
+      SPRING_R2DBC_USERNAME: username
+      SPRING_R2DBC_PASSWORD: user_password
 #      SPRING_APPLICATION_JSON: '{
-#        "spring.profiles.active" : "test",
-#        "spring.datasource.url"  : "$POSTGRES_SQL_DB_URL",
-#        "spring.datasource.username" : "$POSTGRES_SQL_DB_USER",
-#        "spring.datasource.password" : "$POSTGRES_SQL_DB_ROOT_PASSWORD",
-#        "spring.jpa.properties.hibernate.dialect" : "$POSTGRES_SQL_DB_DIALECT",
-#        "spring.jpa.hibernate.ddl-auto" : "none"
+#        "spring.profiles.active" : "local",
+#        "spring.r2dbc.password": "user_password"
+#        "spring.r2dbc.username": "username"
+#        "spring.r2dbc.url": "r2dbc:postgresql://postgres-franchises-db:5432/postgres"
 #      }'
-#    volumes:
-#      - .m2:/root/.m2
-#    stdin_open: true
-#    tty: true
-#    networks:
-#      - app-network
+    depends_on:
+      - postgres-franchises
+    stdin_open: true
+    tty: true
 
 volumes:
   postgres_data:

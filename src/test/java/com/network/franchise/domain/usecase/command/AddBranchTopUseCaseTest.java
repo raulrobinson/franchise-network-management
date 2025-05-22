@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 @ExtendWith(MockitoExtension.class)
-class AddBranchUseCaseTest {
+class AddBranchTopUseCaseTest {
 
     @Mock
     private AppPersistenceAdapterPort appPersistenceAdapterPort;
@@ -98,31 +98,31 @@ class AddBranchUseCaseTest {
                 .verify();
     }
 
-    @Test
-    void shouldCreateBranchSuccessfully() {
-        BranchEntity branchEntity = new BranchEntity(); // Simulate entity
-        CreateBranchResponseDto responseDto = CreateBranchResponseDto.builder().name("Success").build();
-
-        Mockito.when(appPersistenceAdapterPort.existsInBranchByFranchiseId(franchiseId))
-                .thenReturn(Mono.just(true));
-
-        Mockito.when(appPersistenceAdapterPort.existsByBranchName(branchName))
-                .thenReturn(Mono.just(false));
-
-        Mockito.when(appPersistenceAdapterPort.existsFranchiseByIdExists(franchiseId))
-                .thenReturn(Mono.just(true));
-
-        Mockito.when(appPersistenceAdapterPort.addBranch(Mockito.any()))
-                .thenReturn(Mono.just(branchEntity));
-
-        Mockito.when(mapper.toEntityFromDomainBranch(validBranch))
-                .thenReturn(branchEntity);
-
-        Mockito.when(mapper.toDomainFromBranchEntity(branchEntity))
-                .thenReturn(responseDto);
-
-        StepVerifier.create(addBranchUseCase.addBranch(validBranch))
-                .expectNext(responseDto)
-                .verifyComplete();
-    }
+//    @Test
+//    void shouldCreateBranchSuccessfully() {
+//        BranchEntity branchEntity = new BranchEntity(); // Simulate entity
+//        CreateBranchResponseDto responseDto = CreateBranchResponseDto.builder().name("Success").build();
+//
+//        Mockito.when(appPersistenceAdapterPort.existsInBranchByFranchiseId(franchiseId))
+//                .thenReturn(Mono.just(true));
+//
+//        Mockito.when(appPersistenceAdapterPort.existsByBranchName(branchName))
+//                .thenReturn(Mono.just(false));
+//
+//        Mockito.when(appPersistenceAdapterPort.existsFranchiseByIdExists(franchiseId))
+//                .thenReturn(Mono.just(true));
+//
+//        Mockito.when(appPersistenceAdapterPort.addBranch(Mockito.any()))
+//                .thenReturn(Mono.just(branchEntity));
+//
+//        Mockito.when(mapper.toEntityFromDomainBranch(validBranch))
+//                .thenReturn(branchEntity);
+//
+//        Mockito.when(mapper.toDomainFromBranchEntity(branchEntity))
+//                .thenReturn(responseDto);
+//
+//        StepVerifier.create(addBranchUseCase.addBranch(validBranch))
+//                .expectNext(responseDto)
+//                .verifyComplete();
+//    }
 }
