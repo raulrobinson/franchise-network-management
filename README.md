@@ -54,7 +54,7 @@ The code coverage report is generated using JaCoCo and can be found in the `buil
 ```
 ![jococo-report.png](jococo-report.png)
 
-### Amazon ECR
+### Amazon ECR & Docker
 
 The application is containerized using Docker and can be deployed to Amazon Elastic Container Registry (ECR). The following commands can be used to build and push the Docker image to ECR:
 - docker build -t franchise-network-management:latest .
