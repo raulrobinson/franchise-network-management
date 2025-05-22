@@ -312,7 +312,7 @@ public class AppRouter {
                 .POST("/api/v1/branches/{branchId}/products", handler::addProduct)
                 .DELETE("/api/v1/branches/{branchId}/products/{productId}", handler::deleteProduct)
                 .PUT("/api/v1/products/{productId}/stock", handler::updateStock)
-//                .GET("/api/v1/franchises/{franchiseId}/top-products", handler::getTopProductsPerBranch)
+                .GET("/api/v1/franchises/{franchiseId}/top-products", handler::getTopProductsPerBranch)
                 .build();
     }
 }
