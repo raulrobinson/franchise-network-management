@@ -1,8 +1,6 @@
 package com.network.franchise.infrastructure.inbound.mapper;
 
-import com.network.franchise.domain.dto.response.CreateProductResponseDto;
 import com.network.franchise.domain.model.Product;
-import com.network.franchise.infrastructure.adapters.persistence.entity.ProductEntity;
 import org.springframework.stereotype.Component;
 
 @Component
