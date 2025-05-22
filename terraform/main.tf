@@ -106,7 +106,7 @@ resource "aws_db_instance" "postgres" {
   instance_class         = "db.t4g.micro"
   allocated_storage      = 20
   db_name                = "franchise"
-  username               = "franchise-username"
+  username               = "franchiseUsr"
   password               = var.db_password
   db_subnet_group_name   = aws_db_subnet_group.main.name
   vpc_security_group_ids = [aws_security_group.ecs_sg.id]
