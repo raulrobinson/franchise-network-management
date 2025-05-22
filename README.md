@@ -1,6 +1,6 @@
 # franchiseEntity-network-management
 
-API for Franchise Network Management Services
+The Franchise Network Management project is a Spring Boot application that provides a RESTful API for managing franchises, branches, and products. The application allows users to create franchises, add branches to franchises, manage products in branches, and track product stock levels.
 
 ### Operations
 
