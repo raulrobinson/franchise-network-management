@@ -6,7 +6,7 @@ import com.network.franchise.domain.common.exceptions.BusinessException;
 import com.network.franchise.domain.common.exceptions.DuplicateException;
 import com.network.franchise.domain.common.exceptions.NotFoundException;
 import com.network.franchise.domain.dto.response.CreateProductResponseDto;
-import com.network.franchise.infrastructure.inbound.mapper.ProductsMapper;
+import com.network.franchise.domain.mapper.ProductDtoMapper;
 import com.network.franchise.domain.model.Product;
 import com.network.franchise.domain.spi.AddProductServicePort;
 import reactor.core.publisher.Mono;
@@ -14,11 +14,9 @@ import reactor.core.publisher.Mono;
 public class AddProductUseCase implements AddProductServicePort {
 
     private final AppPersistenceAdapterPort appPersistenceAdapterPort;
-    private final ProductsMapper mapper;
 
-    public AddProductUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort, ProductsMapper mapper) {
+    public AddProductUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort) {
         this.appPersistenceAdapterPort = appPersistenceAdapterPort;
-        this.mapper = mapper;
     }
 
     @Override
@@ -40,8 +38,8 @@ public class AddProductUseCase implements AddProductServicePort {
                                         .flatMap(branchExists -> {
                                             if (!branchExists) return Mono.error(new BusinessException(TechnicalMessage.NOT_FOUND));
 
-                                            return appPersistenceAdapterPort.addProduct(mapper.toEntityFromDomainProduct(product))
-                                                    .map(mapper::toDomainFromProductEntity);
+                                            return appPersistenceAdapterPort.addProduct(ProductDtoMapper.INSTANCE.toEntityFromDomainProduct(product))
+                                                    .map(ProductDtoMapper.INSTANCE::toDomainFromProductEntity);
                                         });
                             });
                 });

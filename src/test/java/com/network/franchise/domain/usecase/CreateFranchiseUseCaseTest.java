@@ -27,7 +27,7 @@ class CreateFranchiseUseCaseTest {
     void setUp() {
         appPersistenceAdapterPort = mock(AppPersistenceAdapterPort.class);
         mapper = mock(FranchiseMapper.class);
-        useCase = new CreateFranchiseUseCase(appPersistenceAdapterPort, mapper);
+        useCase = new CreateFranchiseUseCase(appPersistenceAdapterPort);
     }
 
     @Test

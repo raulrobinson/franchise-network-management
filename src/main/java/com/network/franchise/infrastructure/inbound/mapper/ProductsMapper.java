@@ -17,25 +17,6 @@ public class ProductsMapper {
                 .build();
     }
 
-    public ProductEntity toEntityFromDomainProduct(Product domain) {
-        if (domain == null) return null;
-        return ProductEntity.builder()
-                .name(domain.getName())
-                .branchId(domain.getBranchId())
-                .stock(domain.getStock())
-                .build();
-    }
-
-    public CreateProductResponseDto toDomainFromProductEntity(ProductEntity entity) {
-        if (entity == null) return null;
-        return CreateProductResponseDto.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .stock((long) entity.getStock())
-                .branchId(entity.getBranchId())
-                .build();
-    }
-
     public Product toDomainFromUpdateProductRequestDto(Product product, Long productId) {
         if (product == null || productId == null) return null;
         return Product.builder()

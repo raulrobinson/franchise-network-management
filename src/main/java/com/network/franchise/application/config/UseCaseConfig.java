@@ -15,9 +15,8 @@ import org.springframework.data.r2dbc.config.EnableR2dbcAuditing;
 public class UseCaseConfig {
 
     @Bean
-    public CreateFranchiseUseCase createFranchiseUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort,
-                                                         FranchiseMapper mapper) {
-        return new CreateFranchiseUseCase(appPersistenceAdapterPort, mapper);
+    public CreateFranchiseUseCase createFranchiseUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort) {
+        return new CreateFranchiseUseCase(appPersistenceAdapterPort);
     }
 
     @Bean
@@ -27,9 +26,8 @@ public class UseCaseConfig {
     }
 
     @Bean
-    public AddProductUseCase addProductUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort,
-                                               ProductsMapper mapper) {
-        return new AddProductUseCase(appPersistenceAdapterPort, mapper);
+    public AddProductUseCase addProductUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort) {
+        return new AddProductUseCase(appPersistenceAdapterPort);
     }
 
     @Bean
@@ -38,9 +36,8 @@ public class UseCaseConfig {
     }
 
     @Bean
-    public UpdateStockUseCase updateStockUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort,
-                                                 ProductsMapper mapper) {
-        return new UpdateStockUseCase(appPersistenceAdapterPort, mapper);
+    public UpdateStockUseCase updateStockUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort) {
+        return new UpdateStockUseCase(appPersistenceAdapterPort);
     }
 
     @Bean
