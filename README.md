@@ -54,6 +54,23 @@ The code coverage report is generated using JaCoCo and can be found in the `buil
 ```
 ![jococo-report.png](jococo-report.png)
 
+### Amazon ECR
+
+The application is containerized using Docker and can be deployed to Amazon Elastic Container Registry (ECR). The following commands can be used to build and push the Docker image to ECR:
+- docker build -t franchise-network-management:latest .
+
+The application is containerized using Docker and can be deployed to Amazon Elastic Container Registry (ECR). The following commands can be used to build and push the Docker image to ECR:
+- aws ecr create-repository --repository-name franchise-network-management
+
+Tag the Docker image with the ECR repository URI:
+- docker tag franchise-network-management:latest 221986013097.dkr.ecr.us-east-1.amazonaws.com/franchise-network-management:latest
+
+Build the Docker image:
+- aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 221986013097.dkr.ecr.us-east-1.amazonaws.com
+
+Push the Docker image to ECR:
+- docker push 221986013097.dkr.ecr.us-east-1.amazonaws.com/franchise-network-management:latest
+
 ### Deployment with Terraform in AWS
 
 The deployment of the application in AWS is done using Terraform. The Terraform code is located in the `terraform` directory. The Terraform code provisions the following resources:
