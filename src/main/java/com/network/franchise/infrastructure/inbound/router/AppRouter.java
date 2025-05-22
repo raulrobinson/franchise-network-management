@@ -8,6 +8,7 @@ import com.network.franchise.domain.dto.request.UpdateProductStockRequestDto;
 import com.network.franchise.domain.dto.response.CreateBranchResponseDto;
 import com.network.franchise.domain.dto.response.CreateFranchiseResponseDto;
 import com.network.franchise.domain.dto.response.CreateProductResponseDto;
+import com.network.franchise.domain.dto.response.top.TopProductPerBranchDto;
 import com.network.franchise.infrastructure.inbound.handler.AppHandler;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -275,6 +276,55 @@ public class AppRouter {
                                             content = @io.swagger.v3.oas.annotations.media.Content(
                                                     mediaType = "application/json",
                                                     schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateProductResponseDto.class)
+                                            )
+                                    ),
+                                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                                            responseCode = "400",
+                                            description = "Bad Request",
+                                            content = @io.swagger.v3.oas.annotations.media.Content(
+                                                    mediaType = "application/json",
+                                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ErrorDto.class)
+                                            )
+                                    ),
+                                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                                            responseCode = "404",
+                                            description = "Not Found",
+                                            content = @io.swagger.v3.oas.annotations.media.Content(
+                                                    mediaType = "application/json",
+                                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ErrorDto.class)
+                                            )
+                                    ),
+                                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                                            responseCode = "500",
+                                            description = "Internal Server Error",
+                                            content = @io.swagger.v3.oas.annotations.media.Content(
+                                                    mediaType = "application/json",
+                                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ErrorDto.class)
+                                            )
+                                    )
+                            }
+                    )
+            ),
+            @RouterOperation(
+                    path = "/api/v1/franchises/{franchiseId}/top-products",
+                    produces = "application/json",
+                    method = RequestMethod.GET,
+                    beanClass = AppHandler.class,
+                    beanMethod = "getTopProductsPerBranch",
+                    operation = @io.swagger.v3.oas.annotations.Operation(
+                            operationId = "getTopProductsPerBranch",
+                            summary = "Get top products per branch of a Franchise",
+                            description = "Get the top products per branch of a Franchise.",
+                            parameters = {
+                                    @Parameter(name = "franchiseId", in = ParameterIn.PATH, description = "Franchise ID", example = "1"),
+                            },
+                            responses = {
+                                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                                            responseCode = "200",
+                                            description = "OK",
+                                            content = @io.swagger.v3.oas.annotations.media.Content(
+                                                    mediaType = "application/json",
+                                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = TopProductPerBranchDto.class)
                                             )
                                     ),
                                     @io.swagger.v3.oas.annotations.responses.ApiResponse(
