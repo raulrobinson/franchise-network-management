@@ -7,7 +7,7 @@ import com.network.franchise.infrastructure.adapters.persistence.entity.Franchis
 
 public interface FranchiseDtoMapper {
 
-    public FranchiseDtoMapper INSTANCE = new FranchiseDtoMapperImpl();
+//    public FranchiseDtoMapper INSTANCE = new FranchiseDtoMapperImpl();
 
     FranchiseEntity toEntityFromDomainFranchise(Franchise domain);
 

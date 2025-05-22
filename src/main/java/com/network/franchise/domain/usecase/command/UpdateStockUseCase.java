@@ -13,9 +13,11 @@ import reactor.core.publisher.Mono;
 public class UpdateStockUseCase implements UpdateStockServicePort {
 
     private final AppPersistenceAdapterPort appPersistenceAdapterPort;
+    private final ProductDtoMapper mapper;
 
-    public UpdateStockUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort) {
+    public UpdateStockUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort, ProductDtoMapper mapper) {
         this.appPersistenceAdapterPort = appPersistenceAdapterPort;
+        this.mapper = mapper;
     }
 
     @Override
@@ -27,7 +29,7 @@ public class UpdateStockUseCase implements UpdateStockServicePort {
                     existing.setStock(product.getStock());
 
                     return appPersistenceAdapterPort.updateProduct(existing, product.getId())
-                            .map(ProductDtoMapper.INSTANCE::toDomainFromProductEntity);
+                            .map(mapper::toDomainFromProductEntity);
                 })
                 .switchIfEmpty(Mono.error(new BusinessException(TechnicalMessage.BAD_REQUEST)));
     }

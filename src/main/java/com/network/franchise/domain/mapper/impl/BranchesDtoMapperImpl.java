@@ -4,7 +4,9 @@ import com.network.franchise.domain.dto.response.CreateBranchResponseDto;
 import com.network.franchise.domain.mapper.BranchesDtoMapper;
 import com.network.franchise.domain.model.Branch;
 import com.network.franchise.infrastructure.adapters.persistence.entity.BranchEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BranchesDtoMapperImpl implements BranchesDtoMapper {
 
     @Override

@@ -13,9 +13,11 @@ import reactor.core.publisher.Mono;
 public class CreateFranchiseUseCase implements CreateFranchiseServicePort {
 
     private final AppPersistenceAdapterPort appPersistenceAdapterPort;
+    private final FranchiseDtoMapper mapper;
 
-    public CreateFranchiseUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort) {
+    public CreateFranchiseUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort, FranchiseDtoMapper mapper) {
         this.appPersistenceAdapterPort = appPersistenceAdapterPort;
+        this.mapper = mapper;
     }
 
     @Override
@@ -26,8 +28,8 @@ public class CreateFranchiseUseCase implements CreateFranchiseServicePort {
         return appPersistenceAdapterPort.existsFranchiseByName(request.getName())
                 .flatMap(exists -> {
                     if (exists) return Mono.error(new DuplicateException(TechnicalMessage.ALREADY_EXISTS));
-                    return appPersistenceAdapterPort.createFranchise(FranchiseDtoMapper.INSTANCE.toEntityFromDomainFranchise(request))
-                            .map(FranchiseDtoMapper.INSTANCE::toDomainFromFranchiseEntity);
+                    return appPersistenceAdapterPort.createFranchise(mapper.toEntityFromDomainFranchise(request))
+                            .map(mapper::toDomainFromFranchiseEntity);
                 })
                 .switchIfEmpty(Mono.error(new BusinessException(TechnicalMessage.BAD_REQUEST)));
     }

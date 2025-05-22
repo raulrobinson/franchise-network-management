@@ -7,7 +7,6 @@ import com.network.franchise.domain.common.exceptions.DuplicateException;
 import com.network.franchise.domain.common.exceptions.NotFoundException;
 import com.network.franchise.domain.dto.response.CreateProductResponseDto;
 import com.network.franchise.domain.mapper.ProductDtoMapper;
-import com.network.franchise.infrastructure.inbound.mapper.ProductsMapper;
 import com.network.franchise.domain.model.Product;
 import com.network.franchise.infrastructure.adapters.persistence.entity.ProductEntity;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +26,7 @@ class AddProductUseCaseTest {
     private AppPersistenceAdapterPort appPersistenceAdapterPort;
 
     @Mock
-    private ProductsMapper mapper;
+    private ProductDtoMapper mapper;
 
     @InjectMocks
     private AddProductUseCase addProductUseCase;
@@ -101,15 +100,15 @@ class AddProductUseCaseTest {
                 .name("Product 1")
                 .build();
 
-//        Mockito.when(appPersistenceAdapterPort.existsInProductByBranchId(1L)).thenReturn(Mono.just(true));
-//        Mockito.when(appPersistenceAdapterPort.existsByProductName("Product 1")).thenReturn(Mono.just(false));
-//        Mockito.when(appPersistenceAdapterPort.existsBranchesByIdExists(1L)).thenReturn(Mono.just(true));
-//        Mockito.when(ProductDtoMapper.INSTANCE.toEntityFromDomainProduct(validProduct)).thenReturn(entity);
-//        Mockito.when(appPersistenceAdapterPort.addProduct(entity)).thenReturn(Mono.just(entity));
-//        Mockito.when(ProductDtoMapper.INSTANCE.toDomainFromProductEntity(entity)).thenReturn(responseDto);
-//
-//        StepVerifier.create(addProductUseCase.addProduct(validProduct))
-//                .expectNext(responseDto)
-//                .verifyComplete();
+        Mockito.when(appPersistenceAdapterPort.existsInProductByBranchId(1L)).thenReturn(Mono.just(true));
+        Mockito.when(appPersistenceAdapterPort.existsByProductName("Product 1")).thenReturn(Mono.just(false));
+        Mockito.when(appPersistenceAdapterPort.existsBranchesByIdExists(1L)).thenReturn(Mono.just(true));
+        Mockito.when(mapper.toEntityFromDomainProduct(validProduct)).thenReturn(entity);
+        Mockito.when(appPersistenceAdapterPort.addProduct(entity)).thenReturn(Mono.just(entity));
+        Mockito.when(mapper.toDomainFromProductEntity(entity)).thenReturn(responseDto);
+
+        StepVerifier.create(addProductUseCase.addProduct(validProduct))
+                .expectNext(responseDto)
+                .verifyComplete();
     }
 }

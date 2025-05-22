@@ -24,7 +24,7 @@ class UpdateStockUseCaseTest {
     private AppPersistenceAdapterPort appPersistenceAdapterPort;
 
     @Mock
-    private ProductDtoMapper productDtoMapper;
+    private ProductDtoMapper mapper;
 
     @InjectMocks
     private UpdateStockUseCase updateStockUseCase;
@@ -32,23 +32,31 @@ class UpdateStockUseCaseTest {
     @Test
     void updateStock_whenProductExists_shouldUpdateAndReturnResponse() {
         // Given
-        Product product = Product.builder().id(1L).stock(20).build();
-        ProductEntity existingEntity = ProductEntity.builder().id(1L).stock(10).build();
-        CreateProductResponseDto responseDto = CreateProductResponseDto.builder().id(1L).stock(20L).build();
+        Product product = new Product();
+        product.setId(1L);
+        product.setStock(20);
 
-//        when(appPersistenceAdapterPort.findProductById(1L)).thenReturn(Mono.just(existingEntity));
-//        when(appPersistenceAdapterPort.updateProduct(existingEntity, 1L)).thenReturn(Mono.just(existingEntity));
-//        when(productDtoMapper.toDomainFromProductEntity(existingEntity)).thenReturn(responseDto);
+        ProductEntity existingEntity = new ProductEntity();
+        existingEntity.setId(1L);
+        existingEntity.setStock(10);
 
-//        // When
-//        StepVerifier.create(updateStockUseCase.updateStock(product))
-//                .expectNextMatches(dto -> dto.getId().equals(1L) && dto.getStock() == 20)
-//                .verifyComplete();
-//
-//        // Then
-//        verify(appPersistenceAdapterPort).findProductById(1L);
-//        verify(appPersistenceAdapterPort).updateProduct(existingEntity, 1L);
-//        verify(productDtoMapper.toDomainFromProductEntity(existingEntity));
+        CreateProductResponseDto responseDto = new CreateProductResponseDto();
+        responseDto.setId(1L);
+        responseDto.setStock(20L);
+
+        when(appPersistenceAdapterPort.findProductById(1L)).thenReturn(Mono.just(existingEntity));
+        when(appPersistenceAdapterPort.updateProduct(existingEntity, 1L)).thenReturn(Mono.just(existingEntity));
+        when(mapper.toDomainFromProductEntity(existingEntity)).thenReturn(responseDto);
+
+        // When
+        StepVerifier.create(updateStockUseCase.updateStock(product))
+                .expectNextMatches(dto -> dto.getId().equals(1L) && dto.getStock() == 20)
+                .verifyComplete();
+
+        // Then
+        verify(appPersistenceAdapterPort).findProductById(1L);
+        verify(appPersistenceAdapterPort).updateProduct(existingEntity, 1L);
+        verify(mapper).toDomainFromProductEntity(existingEntity);
     }
 
     @Test
@@ -58,19 +66,19 @@ class UpdateStockUseCaseTest {
         product.setId(99L);
         product.setStock(5);
 
-//        when(appPersistenceAdapterPort.findProductById(99L)).thenReturn(Mono.empty());
-//
-//        // When
-//        StepVerifier.create(updateStockUseCase.updateStock(product))
-//                .expectErrorMatches(throwable ->
-//                        throwable instanceof NotFoundException &&
-//                                throwable.getMessage().contains("Product ID: 99 does not exist"))
-//                .verify();
-//
-//        // Then
-//        verify(appPersistenceAdapterPort).findProductById(99L);
-//        verify(appPersistenceAdapterPort, never()).updateProduct(any(), anyLong());
-//        verify(ProductDtoMapper.INSTANCE, never()).toDomainFromProductEntity(any());
+        when(appPersistenceAdapterPort.findProductById(99L)).thenReturn(Mono.empty());
+
+        // When
+        StepVerifier.create(updateStockUseCase.updateStock(product))
+                .expectErrorMatches(throwable ->
+                        throwable instanceof NotFoundException &&
+                                throwable.getMessage().contains("Product ID: 99 does not exist"))
+                .verify();
+
+        // Then
+        verify(appPersistenceAdapterPort).findProductById(99L);
+        verify(appPersistenceAdapterPort, never()).updateProduct(any(), anyLong());
+        verify(mapper, never()).toDomainFromProductEntity(any());
     }
 
     @Test
@@ -84,18 +92,18 @@ class UpdateStockUseCaseTest {
         existingEntity.setId(1L);
         existingEntity.setStock(10);
 
-//        when(appPersistenceAdapterPort.findProductById(1L)).thenReturn(Mono.just(existingEntity));
-//        when(appPersistenceAdapterPort.updateProduct(existingEntity, 1L)).thenReturn(Mono.empty());
-//
-//        // When
-//        StepVerifier.create(updateStockUseCase.updateStock(product))
-//                .expectErrorMatches(throwable ->
-//                        throwable instanceof BusinessException)
-//                .verify();
-//
-//        // Then
-//        verify(appPersistenceAdapterPort).findProductById(1L);
-//        verify(appPersistenceAdapterPort).updateProduct(existingEntity, 1L);
-//        verify(ProductDtoMapper.INSTANCE, never()).toDomainFromProductEntity(any());
+        when(appPersistenceAdapterPort.findProductById(1L)).thenReturn(Mono.just(existingEntity));
+        when(appPersistenceAdapterPort.updateProduct(existingEntity, 1L)).thenReturn(Mono.empty());
+
+        // When
+        StepVerifier.create(updateStockUseCase.updateStock(product))
+                .expectErrorMatches(throwable ->
+                        throwable instanceof BusinessException)
+                .verify();
+
+        // Then
+        verify(appPersistenceAdapterPort).findProductById(1L);
+        verify(appPersistenceAdapterPort).updateProduct(existingEntity, 1L);
+        verify(mapper, never()).toDomainFromProductEntity(any());
     }
 }

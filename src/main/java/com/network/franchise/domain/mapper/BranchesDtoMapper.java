@@ -7,7 +7,7 @@ import com.network.franchise.infrastructure.adapters.persistence.entity.BranchEn
 
 public interface BranchesDtoMapper {
 
-    BranchesDtoMapper INSTANCE = new BranchesDtoMapperImpl();
+//    BranchesDtoMapper INSTANCE = new BranchesDtoMapperImpl();
 
     BranchEntity toEntityFromDomainBranch(Branch domain);
 

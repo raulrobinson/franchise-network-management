@@ -12,9 +12,11 @@ import reactor.core.publisher.Mono;
 public class AddBranchUseCase implements AddBranchServicePort {
 
     private final AppPersistenceAdapterPort appPersistenceAdapterPort;
+    private final BranchesDtoMapper mapper;
 
-    public AddBranchUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort) {
+    public AddBranchUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort, BranchesDtoMapper mapper) {
         this.appPersistenceAdapterPort = appPersistenceAdapterPort;
+        this.mapper = mapper;
     }
 
     @Override
@@ -31,8 +33,8 @@ public class AddBranchUseCase implements AddBranchServicePort {
                                     .flatMap(existsByName -> appPersistenceAdapterPort.existsFranchiseByIdExists(branch.getFranchiseId())
                                             .flatMap(existsFranchise -> {
                                                 if (!existsFranchise) return Mono.error(new BusinessException(TechnicalMessage.NOT_FOUND));
-                                                return appPersistenceAdapterPort.addBranch(BranchesDtoMapper.INSTANCE.toEntityFromDomainBranch(branch))
-                                                        .map(BranchesDtoMapper.INSTANCE::toDomainFromBranchEntity);
+                                                return appPersistenceAdapterPort.addBranch(mapper.toEntityFromDomainBranch(branch))
+                                                        .map(mapper::toDomainFromBranchEntity);
                                             }))
                                     .switchIfEmpty(Mono.error(new BusinessException(TechnicalMessage.ALREADY_EXISTS)));
                         });
