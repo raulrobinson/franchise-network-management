@@ -185,7 +185,7 @@ public class AppPersistenceAdapter implements AppPersistenceAdapterPort {
     }
 
     public Mono<Long> updateFranchiseNameRepository(Long id, String name) {
-        String sql = "UPDATE public.franchises SET name = :name WHERE id = :id";
+        String sql = "UPDATE public.franchises SET name = :name, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
         return template
                 .getDatabaseClient()
                 .sql(sql)
