@@ -63,16 +63,7 @@ public class AppPersistenceAdapter implements AppPersistenceAdapterPort {
 
     @Override
     public Mono<Void> deleteProduct(Long productId, Long branchId) {
-        return productRepository.findById(productId)
-                .flatMap(productEntity -> {
-                    if (productEntity.getBranchId().equals(branchId)) {
-                        return productRepository.delete(productEntity)
-                                .doOnSuccess(aVoid -> log.info("Product deleted: {}", productEntity))
-                                .doOnError(error -> log.error("Error deleting product: {}", error.getMessage()));
-                    } else {
-                        return Mono.error(new ProcessorException("Product does not belong to this branch", TechnicalMessage.BAD_REQUEST));
-                    }
-                });
+        return productRepository.deleteProduct(productId, branchId);
     }
 
     @Override
@@ -80,11 +71,9 @@ public class AppPersistenceAdapter implements AppPersistenceAdapterPort {
         return productRepository.findById(productId)
                 .flatMap(existingProductEntity -> {
                     productEntity.setId(existingProductEntity.getId());
-                    return productRepository.save(productEntity)
-                            .doOnSuccess(updatedProductEntity -> log.info("Product updated: {}", updatedProductEntity))
-                            .doOnError(error -> log.error("Error updating product: {}", error.getMessage()));
+                    return productRepository.save(productEntity);
                 })
-                .switchIfEmpty(Mono.error(new RuntimeException("Product not found")));
+                .switchIfEmpty(Mono.error(new ProcessorException("Error updating product", TechnicalMessage.BAD_REQUEST)));
     }
 
     @Override
