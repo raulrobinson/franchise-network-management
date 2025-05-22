@@ -15,6 +15,7 @@ public class GetTopProductsPerBranchUseCase implements GetTopProductsPerBranchSe
         this.appPersistenceAdapterPort = appPersistenceAdapterPort;
     }
 
+    // TODO: obtener lista de producto top de cada sucursal de la franquicia solicitada.
     @Override
     public Mono<TopProductPerBranchDto> getTopProductsPerBranch(Long franchiseId) {
         return appPersistenceAdapterPort.findByFranchiseId(franchiseId)

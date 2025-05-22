@@ -44,7 +44,8 @@ public class AppHandler {
 
     public Mono<ServerResponse> createFranchise(ServerRequest request) {
         return request.bodyToMono(CreateFranchiseRequestDto.class)
-                .flatMap(req -> createFranchiseServicePort.createTechnology(franchiseMapper.toDomainFromFranchiseRequestDto(req)))
+                .flatMap(req -> createFranchiseServicePort
+                        .createTechnology(franchiseMapper.toDomainFromFranchiseRequestDto(req)))
                 .flatMap(franchise -> ServerResponse.ok().bodyValue(franchise))
                 .doOnError(error -> log.error(CREATE_ERROR, error.getMessage()))
                 .onErrorResume(BusinessException.class, ex -> buildErrorResponse(

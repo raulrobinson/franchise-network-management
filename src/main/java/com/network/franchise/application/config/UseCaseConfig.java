@@ -1,9 +1,9 @@
 package com.network.franchise.application.config;
 
 import com.network.franchise.domain.api.AppPersistenceAdapterPort;
-import com.network.franchise.domain.mapper.BranchesDtoMapper;
-import com.network.franchise.domain.mapper.FranchiseDtoMapper;
-import com.network.franchise.domain.mapper.ProductDtoMapper;
+import com.network.franchise.infrastructure.mapper.BranchesDtoMapper;
+import com.network.franchise.infrastructure.mapper.FranchiseDtoMapper;
+import com.network.franchise.infrastructure.mapper.ProductDtoMapper;
 import com.network.franchise.domain.usecase.command.*;
 import com.network.franchise.domain.usecase.queries.GetTopProductsPerBranchUseCase;
 import org.springframework.context.annotation.Bean;

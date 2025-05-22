@@ -13,5 +13,29 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+#  # ----------------------------------------
+#  # UTILITIES - 8088
+#  # ----------------------------------------
+#  utilities:
+#    build: ./utilities-portal-dyt
+#    restart: always
+#    ports:
+#      - $UTILITIES_LOCAL_PORT:$MICROSERVICES_DOCKER_PORT
+#    environment:
+#      SPRING_APPLICATION_JSON: '{
+#        "spring.profiles.active" : "test",
+#        "spring.datasource.url"  : "$POSTGRES_SQL_DB_URL",
+#        "spring.datasource.username" : "$POSTGRES_SQL_DB_USER",
+#        "spring.datasource.password" : "$POSTGRES_SQL_DB_ROOT_PASSWORD",
+#        "spring.jpa.properties.hibernate.dialect" : "$POSTGRES_SQL_DB_DIALECT",
+#        "spring.jpa.hibernate.ddl-auto" : "none"
+#      }'
+#    volumes:
+#      - .m2:/root/.m2
+#    stdin_open: true
+#    tty: true
+#    networks:
+#      - app-network
+
 volumes:
   postgres_data:

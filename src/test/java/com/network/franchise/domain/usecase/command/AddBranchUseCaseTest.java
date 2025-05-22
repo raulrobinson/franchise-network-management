@@ -3,7 +3,7 @@ package com.network.franchise.domain.usecase.command;
 import com.network.franchise.domain.api.AppPersistenceAdapterPort;
 import com.network.franchise.domain.common.exceptions.BusinessException;
 import com.network.franchise.domain.dto.response.CreateBranchResponseDto;
-import com.network.franchise.domain.mapper.BranchesDtoMapper;
+import com.network.franchise.infrastructure.mapper.BranchesDtoMapper;
 import com.network.franchise.domain.model.Branch;
 import com.network.franchise.infrastructure.adapters.persistence.entity.BranchEntity;
 import org.junit.jupiter.api.BeforeEach;

@@ -4,7 +4,7 @@ import com.network.franchise.domain.api.AppPersistenceAdapterPort;
 import com.network.franchise.domain.common.exceptions.BusinessException;
 import com.network.franchise.domain.common.exceptions.NotFoundException;
 import com.network.franchise.domain.dto.response.CreateProductResponseDto;
-import com.network.franchise.domain.mapper.ProductDtoMapper;
+import com.network.franchise.infrastructure.mapper.ProductDtoMapper;
 import com.network.franchise.domain.model.Product;
 import com.network.franchise.infrastructure.adapters.persistence.entity.ProductEntity;
 import org.junit.jupiter.api.Test;

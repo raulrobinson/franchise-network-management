@@ -4,7 +4,7 @@ import com.network.franchise.domain.api.AppPersistenceAdapterPort;
 import com.network.franchise.domain.common.enums.TechnicalMessage;
 import com.network.franchise.domain.common.exceptions.BusinessException;
 import com.network.franchise.domain.dto.response.CreateBranchResponseDto;
-import com.network.franchise.domain.mapper.BranchesDtoMapper;
+import com.network.franchise.infrastructure.mapper.BranchesDtoMapper;
 import com.network.franchise.domain.model.Branch;
 import com.network.franchise.domain.spi.AddBranchServicePort;
 import reactor.core.publisher.Mono;
