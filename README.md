@@ -104,7 +104,7 @@ The project follows the Hexagonal Architecture pattern, which separates the appl
 
 ![hexagon-adapters-ports.drawio.png](hexagon-adapters-ports.drawio.png)
 
-### Flow Chart Use Cases
+### Example Flow Chart Use Case Considerations, Understanding, Design and Acceptance Criteria
 
 ![franchise-network-flowchart.png](franchise-network-flowchart.png)
 
