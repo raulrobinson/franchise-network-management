@@ -4,7 +4,9 @@ import com.network.franchise.domain.dto.response.CreateProductResponseDto;
 import com.network.franchise.domain.mapper.ProductDtoMapper;
 import com.network.franchise.domain.model.Product;
 import com.network.franchise.infrastructure.adapters.persistence.entity.ProductEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductDtoMapperImpl implements ProductDtoMapper {
 
     @Override

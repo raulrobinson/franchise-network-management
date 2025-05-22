@@ -7,7 +7,7 @@ import com.network.franchise.infrastructure.adapters.persistence.entity.ProductE
 
 public interface ProductDtoMapper {
 
-    public ProductDtoMapper INSTANCE = new ProductDtoMapperImpl();
+//    public ProductDtoMapper INSTANCE = new ProductDtoMapperImpl();
 
     ProductEntity toEntityFromDomainProduct(Product domain);
 

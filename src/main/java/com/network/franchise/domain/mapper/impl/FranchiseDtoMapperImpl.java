@@ -4,9 +4,11 @@ import com.network.franchise.domain.dto.response.CreateFranchiseResponseDto;
 import com.network.franchise.domain.mapper.FranchiseDtoMapper;
 import com.network.franchise.domain.model.Franchise;
 import com.network.franchise.infrastructure.adapters.persistence.entity.FranchiseEntity;
+import org.springframework.stereotype.Component;
 
 import static com.network.franchise.infrastructure.inbound.shield.InputSanitizer.blindStr;
 
+@Component
 public class FranchiseDtoMapperImpl implements FranchiseDtoMapper {
 
     @Override

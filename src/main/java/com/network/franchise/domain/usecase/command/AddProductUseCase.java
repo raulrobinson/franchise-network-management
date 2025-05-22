@@ -14,9 +14,11 @@ import reactor.core.publisher.Mono;
 public class AddProductUseCase implements AddProductServicePort {
 
     private final AppPersistenceAdapterPort appPersistenceAdapterPort;
+    private final ProductDtoMapper mapper;
 
-    public AddProductUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort) {
+    public AddProductUseCase(AppPersistenceAdapterPort appPersistenceAdapterPort, ProductDtoMapper mapper) {
         this.appPersistenceAdapterPort = appPersistenceAdapterPort;
+        this.mapper = mapper;
     }
 
     @Override
@@ -38,8 +40,8 @@ public class AddProductUseCase implements AddProductServicePort {
                                         .flatMap(branchExists -> {
                                             if (!branchExists) return Mono.error(new BusinessException(TechnicalMessage.NOT_FOUND));
 
-                                            return appPersistenceAdapterPort.addProduct(ProductDtoMapper.INSTANCE.toEntityFromDomainProduct(product))
-                                                    .map(ProductDtoMapper.INSTANCE::toDomainFromProductEntity);
+                                            return appPersistenceAdapterPort.addProduct(mapper.toEntityFromDomainProduct(product))
+                                                    .map(mapper::toDomainFromProductEntity);
                                         });
                             });
                 });
