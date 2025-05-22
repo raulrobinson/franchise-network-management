@@ -18,12 +18,17 @@ API for Franchise Network Management Services
 
 1. Clone the repository
 2. Navigate to the project directory
-3. Run the following command to start the application:
+3. Select the desired profile:
+   - `local` for local development
+   - `dev` for development (no shared by author, use secrets or keyvault)
+   - `test` for testing (no shared by author, use secrets or keyvault)
+   - `prod` for production (no shared by author, use secrets or keyvault)
+4. Run the following command to start the application:
    ```
-   ./gradlew bootRun
+   ./gradlew bootRun --args='--spring.profiles.active=dev'
    ```
-4. The application will start on port 8080 by default
-5. You can access the API documentation at `http://localhost:8080/webjars/swagger-ui/index.html`
+5. The application will start on port 8080 by default
+6. You can access the API documentation at `http://localhost:8080/webjars/swagger-ui/index.html`
 
 
 ### API Documentation
@@ -47,6 +52,7 @@ The code coverage report is generated using JaCoCo and can be found in the `buil
 ```
 ./gradlew clean test jacocoTestReport
 ```
+![jococo-report.png](jococo-report.png)
 
 ### Author
 
